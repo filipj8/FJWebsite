@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, send_file
 
 app = Flask(__name__)
 
@@ -8,5 +8,10 @@ def index():
     return render_template('index.html')
 
 
+@app.route('/resume')
+def plot_csv():
+    return send_file('/Users/filip/PycharmProjects/filip_site/static/Resume/Filip_Jankovic_Resume.pdf')
+
+
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
