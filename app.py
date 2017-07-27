@@ -12,6 +12,10 @@ def index():
 def plot_csv():
     return send_file('/Users/filip/PycharmProjects/filip_site/static/Resume/Filip_Jankovic_Resume.pdf')
 
+@app.route('/pandasseaborn')
+def pandasseaborn():
+    return render_template('pandasseaborn.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
