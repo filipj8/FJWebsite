@@ -16,6 +16,18 @@ def plot_csv():
 def pandasseaborn():
     return render_template('pandasseaborn.html')
 
+@app.route('/classifiervisualization')
+def classifiervisualization():
+    return render_template('classifiervisualization.html')
+
+@app.route('/pandasregex')
+def pandasregex():
+    return render_template('pandasregex.html')
+
+@app.route('/sentiment')
+def sentiment():
+    return render_template('sentimentanalysis.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
