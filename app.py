@@ -28,6 +28,10 @@ def pandasregex():
 def sentiment():
     return render_template('sentimentanalysis.html')
 
+@app.route('/networkviz')
+def networkviz():
+    return render_template('networkvisualization.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
