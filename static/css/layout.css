@@ -53,12 +53,12 @@ header .banner {
    margin: 0 auto;
    width: 85%;
    padding-bottom: 30px;
-   text-align: center;
+   text-align: left;
 }
 
 header .banner-text { width: 100%; }
 header .banner-text h1 {
-   font: 80px/1.1em 'opensans-bold', sans-serif;
+   font: 32px/1.1em 'opensans-bold', sans-serif;
    color: #fff;
    letter-spacing: 0px;
    margin: 0 auto 18px auto;
@@ -67,7 +67,7 @@ header .banner-text h1 {
 header .banner-text h3 {
    font: 20px/1.9em 'librebaskerville-regular', serif;
    color: #fff;
-   margin: 0 auto;
+   margin: 0;
    width: 70%;
    text-shadow: 1px 2px 3px rgba(0, 0, 0, .8);
 }
@@ -84,7 +84,7 @@ header .banner-text hr {
 
 /* header social links */
 header .social {
-   margin: 24px 0;
+   margin: 24px -12px;
    padding: 0;
    font-size: 30px;
    text-shadow: 0px 1px 2px rgba(0, 0, 0, .8);
