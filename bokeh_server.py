@@ -3,185 +3,178 @@ np.random.seed(0)
 
 from bokeh.io import curdoc
 from bokeh.layouts import widgetbox, row, column
-from bokeh.models import ColumnDataSource, Select, Slider
+from bokeh.models import ColumnDataSource, Select, Button, HoverTool, Range1d
 from bokeh.plotting import figure
-from bokeh.palettes import Spectral6
 
-from sklearn import cluster, datasets
-from sklearn.neighbors import kneighbors_graph
-from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.tree import DecisionTreeClassifier
+
+
 
 # define some helper functions
-def clustering(X, algorithm, n_clusters):
-    # normalize dataset for easier parameter selection
-    X = StandardScaler().fit_transform(X)
-
-    # estimate bandwidth for mean shift
-    bandwidth = cluster.estimate_bandwidth(X, quantile=0.3)
-
-    # connectivity matrix for structured Ward
-    connectivity = kneighbors_graph(X, n_neighbors=10, include_self=False)
-
-    # make connectivity symmetric
-    connectivity = 0.5 * (connectivity + connectivity.T)
+def fit_model(X_train, y_train, algorithm):
 
     # Generate the new colors:
-    if algorithm=='MiniBatchKMeans':
-        model = cluster.MiniBatchKMeans(n_clusters=n_clusters)
+    if algorithm == 'Logistic Regression':
+        model = LogisticRegression()
 
-    elif algorithm=='Birch':
-        model = cluster.Birch(n_clusters=n_clusters)
+    elif algorithm == 'Decision Tree':
+        model = DecisionTreeClassifier(max_depth=3)
 
-    elif algorithm=='DBSCAN':
-        model = cluster.DBSCAN(eps=.2)
+    elif algorithm == 'KNN (N=20)':
+        model = KNeighborsClassifier(n_neighbors=20)
 
-    elif algorithm=='AffinityPropagation':
-        model = cluster.AffinityPropagation(damping=.9,
-                                            preference=-200)
-
-    elif algorithm=='MeanShift':
-        model = cluster.MeanShift(bandwidth=bandwidth,
-                                  bin_seeding=True)
-
-    elif algorithm=='SpectralClustering':
-        model = cluster.SpectralClustering(n_clusters=n_clusters,
-                                           eigen_solver='arpack',
-                                           affinity="nearest_neighbors")
-
-    elif algorithm=='Ward':
-        model = cluster.AgglomerativeClustering(n_clusters=n_clusters,
-                                                linkage='ward',
-                                                connectivity=connectivity)
-
-    elif algorithm=='AgglomerativeClustering':
-        model = cluster.AgglomerativeClustering(linkage="average",
-                                                affinity="cityblock",
-                                                n_clusters=n_clusters,
-                                                connectivity=connectivity)
-
-    model.fit(X)
-
-    if hasattr(model, 'labels_'):
-            y_pred = model.labels_.astype(np.int)
     else:
-            y_pred = model.predict(X)
+        model = LogisticRegression()
 
-    return X, y_pred
+    return model.fit(X_train, y_train)
 
-def get_dataset(dataset, n_samples):
-    if dataset == 'Noisy Circles':
-        return datasets.make_circles(n_samples=n_samples,
-                                    factor=0.5,
-                                    noise=0.05)
 
-    elif dataset == 'Noisy Moons':
-        return datasets.make_moons(n_samples=n_samples,
-                                   noise=0.05)
+mesh_step_size = 0.03
+x_min, x_max = -2, 2.6
+y_min, y_max = -2.4, 2.6
 
-    elif dataset == 'Blobs':
-        return datasets.make_blobs(n_samples=n_samples,
-                                   random_state=8)
 
-    elif dataset == "No Structure":
-        return np.random.rand(n_samples, 2), None
+def predictions(X_test, model, prob):
+    xx, yy = np.meshgrid(np.arange(x_min, x_max, mesh_step_size), np.arange(y_min, y_max, mesh_step_size))
+
+    if prob:
+        Z = model.predict_proba(np.c_[xx.ravel(), yy.ravel()])[:, 1]
+        pred = model.predict_proba(X_test)[:, 1]
+    else:
+        Z = model.predict(np.c_[xx.ravel(), yy.ravel()])
+        pred = model.predict(X_test)
+
+    return Z.reshape(xx.shape), pred
+
 
 # set up initial data
-n_samples = 1500
-n_clusters = 2
-algorithm = 'MiniBatchKMeans'
-dataset = 'Noisy Circles'
+mushroom = np.load('mushroom.npy')
+X, y = mushroom[:, :2], mushroom[:, -1]
+algorithm = 'Logistic Regression'
+test_size = 0.25
+prob = True
 
-X, y = get_dataset(dataset, n_samples)
-X, y_pred = clustering(X, algorithm, n_clusters)
-spectral = np.hstack([Spectral6] * 20)
-colors = [spectral[i] for i in y]
 
-# set up plot (styling in theme.yaml)
-plot = figure(toolbar_location=None, title=algorithm)
-source = ColumnDataSource(data=dict(x=X[:, 0], y=X[:, 1], colors=colors))
-plot.circle('x', 'y', fill_color='colors', line_color=None, source=source)
+X_train, X_test, y_train, y_test = train_test_split(X, y)
+fitted_model = fit_model(X_train, y_train, algorithm)
+back_preds, point_preds = predictions(X_test, fitted_model, prob=prob)
+
+c = ['#d6d7ea', '#d6d8ea', '#d7d9eb', '#d7dbec', '#d7dcec', '#d8dded', '#d8deee', '#d9e0ee',
+     '#d9e1ef', '#d9e2ef', '#dae4f0', '#dbe5f1', '#dce6f1', '#dde7f2', '#dee8f2', '#dfe9f3',
+     '#e0eaf4', '#e1ebf4', '#e1edf5', '#e2eef5', '#e3eff6', '#e5f0f6', '#e6f1f7', '#e7f1f7',
+     '#e8f2f8', '#e9f3f8', '#eaf4f9', '#ebf5f9', '#ecf6fa', '#edf7fa', '#eff8fb', '#f0f8fb',
+     '#f1f9fb', '#f2f9fc', '#f3fafc', '#f4fafc', '#f5fbfd', '#f6fbfd', '#f7fcfd', '#f8fcfd',
+     '#f9fdfd', '#fafdfc', '#fafdfb', '#fbfdfa', '#fcfef9', '#fcfef7', '#fdfef6', '#fdfef5',
+     '#fefff4', '#fffff3', '#fffff2', '#fffef1', '#fffdf0', '#fffdef', '#fffcee', '#fffced',
+     '#fffbec', '#fffaeb', '#fffaea', '#fff9e9', '#fff8e8', '#fff7e7', '#fff6e6', '#fff5e5',
+     '#fff4e4', '#fff3e3', '#fff2e3', '#fff1e2', '#fff0e1', '#ffefe0', '#feeedf', '#feedde',
+     '#feebde', '#feeadd', '#fee9dd', '#fee7dc', '#fde6db', '#fde5db', '#fde3da', '#fde2da',
+     '#fce1d9', '#fce0d8', '#fbded8', '#fbddd7', '#fadcd7', '#f9dbd6', '#f9d9d6', '#f8d8d5',
+     '#f8d7d4', '#f7d6d4', '#f6d5d4', '#f5d4d4', '#f4d3d4', '#f3d2d4', '#f2d1d4', '#f1d0d4',
+     '#f0cfd4', '#efced4', '#eecdd4', '#edccd4']
+
+TOOLS = "hover,save,pan,box_zoom,reset,wheel_zoom"
+
+
+source = ColumnDataSource(data=dict(pc1=X_test[:, 0], pc2=X_test[:, 1],
+                                    color=np.vectorize({0.0: '#036D9B', 1.0: '#E62A05'}.get)(y_test),
+                                    poisonous=np.vectorize({0.0: 'no', 1.0: 'yes'}.get)(y_test),
+                                    pred=point_preds))
+
+
+x_range = Range1d(x_min, x_max, bounds=(x_min, x_max), min_interval=1.5)
+y_range = Range1d(y_min, y_max, bounds=(y_min, y_max), min_interval=1.5)
+
+
+p = figure(title=algorithm + ' '*5 + 'Test Accuracy: ' + str(np.round(fitted_model.score(X, y), 3)),
+           x_range=x_range, y_range=y_range, tools=TOOLS,
+           plot_width=500, plot_height=500)
+
+p.xaxis.minor_tick_line_color = None
+p.yaxis.minor_tick_line_color = None
+
+p.image([back_preds], x=x_min, y=y_min, dw=x_max - x_min, dh=y_max - y_min, palette=c)
+
+p.circle('pc1', 'pc2', color='color', fill_alpha=0.6, size=9, line_alpha=0, source=source, level='overlay')
+
+p.select_one(HoverTool).tooltips = [
+    ("poisonous", "@poisonous"),
+    ('prediction', '@pred{0.00}')]
+
 
 # set up widgets
-clustering_algorithms= [
-    'MiniBatchKMeans',
-    'AffinityPropagation',
-    'MeanShift',
-    'SpectralClustering',
-    'Ward',
-    'AgglomerativeClustering',
-    'DBSCAN',
-    'Birch'
-]
+ml_algorithms = ['Logistic Regression', 'Decision Tree', 'KNN (N=20)']
 
-datasets_names = [
-    'Noisy Circles',
-    'Noisy Moons',
-    'Blobs',
-    'No Structure'
-]
-
-algorithm_select = Select(value='MiniBatchKMeans',
+algorithm_select = Select(value='Logistic Regression',
                           title='Select algorithm:',
                           width=200,
-                          options=clustering_algorithms)
+                          options=ml_algorithms)
 
-dataset_select = Select(value='Noisy Circles',
-                        title='Select dataset:',
-                        width=200,
-                        options=datasets_names)
+test_split_button = Button(label="New Train/Test Split", width=200)
 
-samples_slider = Slider(title="Number of samples",
-                        value=1500.0,
-                        start=1000.0,
-                        end=3000.0,
-                        step=100,
-                        width=400)
+prediction_types = ['Probability', 'Decision']
 
-clusters_slider = Slider(title="Number of clusters",
-                         value=2.0,
-                         start=2.0,
-                         end=10.0,
-                         step=1,
-                         width=400)
+prediction_select = Select(value='Probability',
+                           title='Select boundary:',
+                           width=200,
+                           options=prediction_types)
+
 
 # set up callbacks
-def update_algorithm_or_clusters(attrname, old, new):
-    global X
+def update_predictions(attrname, old, new):
+    global X_train, X_test, y_train, y_test
 
     algorithm = algorithm_select.value
-    n_clusters = int(clusters_slider.value)
+    # test_size = int(test_size_slider.value)
+    prob = True if prediction_select.value == 'Probability' else False
 
-    X, y_pred = clustering(X, algorithm, n_clusters)
-    colors = [spectral[i] for i in y_pred]
+    # X_train, X_test, y_train, y_test = train_test_split(X, y)
+    fitted_model = fit_model(X_train, y_train, algorithm)
 
-    source.data = dict(colors=colors, x=X[:, 0], y=X[:, 1])
+    back_preds, point_preds = predictions(X_test, fitted_model, prob=prob)
 
-    plot.title.text = algorithm
+    source.data = dict(pc1=X_test[:, 0], pc2=X_test[:, 1],
+                       color=np.vectorize({0.0:'#036D9B', 1.0:'#E62A05'}.get)(y_test),
+                       poisonous=np.vectorize({0.0: 'no', 1.0: 'yes'}.get)(y_test),
+                       pred=point_preds)
 
-def update_samples_or_dataset(attrname, old, new):
-    global X, y
+    p.image([back_preds], x=x_min, y=y_min, dw=x_max - x_min, dh=y_max - y_min, palette=c)
 
-    dataset = dataset_select.value
+    p.title.text = algorithm + ' '*5 + 'Test Accuracy: ' + str(np.round(fitted_model.score(X, y), 3))
+
+def update_predictions2():
+    global X_train, X_test, y_train, y_test
+
     algorithm = algorithm_select.value
-    n_clusters = int(clusters_slider.value)
-    n_samples = int(samples_slider.value)
+    # test_size = int(test_size_slider.value)
+    prob = True if prediction_select.value == 'Probability' else False
 
-    X, y = get_dataset(dataset, n_samples)
-    X, y_pred = clustering(X, algorithm, n_clusters)
-    colors = [spectral[i] for i in y_pred]
+    X_train, X_test, y_train, y_test = train_test_split(X, y)
+    fitted_model = fit_model(X_train, y_train, algorithm)
 
-    source.data = dict(colors=colors, x=X[:, 0], y=X[:, 1])
+    back_preds, point_preds = predictions(X_test, fitted_model, prob=prob)
 
-algorithm_select.on_change('value', update_algorithm_or_clusters)
-clusters_slider.on_change('value', update_algorithm_or_clusters)
+    source.data = dict(pc1=X_test[:, 0], pc2=X_test[:, 1],
+                       color=np.vectorize({0.0:'#036D9B', 1.0:'#E62A05'}.get)(y_test),
+                       poisonous=np.vectorize({0.0: 'no', 1.0: 'yes'}.get)(y_test),
+                       pred=point_preds)
 
-dataset_select.on_change('value', update_samples_or_dataset)
-samples_slider.on_change('value', update_samples_or_dataset)
+    p.image([back_preds], x=x_min, y=y_min, dw=x_max - x_min, dh=y_max - y_min, palette=c)
+
+    p.title.text = algorithm + ' '*5 + 'Test Accuracy: ' + str(np.round(fitted_model.score(X, y), 3))
+
+
+algorithm_select.on_change('value', update_predictions)
+test_split_button.on_click(update_predictions2)
+prediction_select.on_change('value', update_predictions)
 
 # set up layout
-selects = row(dataset_select, algorithm_select, width=420)
-inputs = column(selects, widgetbox(samples_slider, clusters_slider))
+# selects = row(prediction_select, algorithm_select, width=420)
+inputs = column(widgetbox(test_split_button, algorithm_select, prediction_select))
 
 # add to document
-curdoc().add_root(row(inputs, plot))
-curdoc().title = "Clustering"
+curdoc().add_root(row(inputs, p))
+curdoc().title = "Mushrooms"
