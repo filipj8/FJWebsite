@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bootstrap Project</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  </head>
+  <body>
+
+    <!-- NAVBAR  -->
+
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">Home</a>
+    </div>
+
+    </div><!-- /.container-fluid -->
+
+    </nav>
+
+    <div class="container">
+
+
+    <div class="container">
+      <h1>Interactive Visualization: Poisonous Mushroom Detection</h1>
+        <h4>
+        The data used in this interactive visualization is based on the <a href="http://archive.ics.uci.edu/ml/datasets/Mushroom?ref=datanews.io">UCI Mushroom Data Set</a>.
+        </h4>
+        <br>
+            <div class="row">
+      <div class="col-lg-4 col-xs-4 thumbnail" style="border:0; padding:8px">
+          <img  src='{{ url_for('static', filename='images/mushroom_viz/m1.jpg') }}' alt=""></div>
+      <div class="col-lg-4 col-xs-4 thumbnail" style="border:0; padding:8px">
+          <img  src='{{ url_for('static', filename='images/mushroom_viz/m5.jpg') }}' alt=""></div>
+      <div class="col-lg-4 col-xs-4 thumbnail" style="border:0; padding:8px">
+          <img  src='{{ url_for('static', filename='images/mushroom_viz/m6.jpg') }}' alt=""></div>
+
+    </div>
+        <br>
+        The original data contained the following 22 features:
+        <br>
+        <br>
+        <ol style="-moz-column-count: 2; -moz-column-gap: 30px; -webkit-column-count: 2; -webkit-column-gap: 20px;
+        column-count: 2; column-gap: 50px; width: 80%">
+            <li>cap-shape</li>
+            <li>cap-surface</li>
+            <li>cap-color</li>
+            <li>bruises</li>
+            <li>odor</li>
+            <li>gill-attachment</li>
+            <li>gill-spacing</li>
+            <li>gill-size</li>
+            <li>gill-color</li>
+            <li>stalk-shape</li>
+            <li>stalk-root</li>
+            <li>stalk-surface-above-ring</li>
+            <li>stalk-surface-below-ring</li>
+            <li>stalk-color-above-ring</li>
+            <li>stalk-color-below-ring</li>
+            <li>veil-type</li>
+            <li>veil-color</li>
+            <li>ring-number</li>
+            <li>ring-type</li>
+            <li>spore-print-color</li>
+            <li>population</li>
+            <li>habitat</li>
+        </ol>
+        <br>
+            Principal Component Analysis (PCA) was performed to reduce the dimensions of the data to two for
+        simplifying visualization.
+        <br>
+        <br>
+        The results of the PCA are visualized below. It looks like there are some clusters of poisonous mushrooms
+        that are easily separable
+    </div>
+
+  </div>
+  <div class="container">
+    <div class="container">
+        <p style="margin:30px; margin-left:80px;">
+        <img alt="" src='{{ url_for('static', filename='images/mushroom_viz/mushroom_scatter.png') }}' height="500px">
+        </p>
+    </div>
+      <br>
+      <hr>
+      <h4>Try fitting different classifiers to the data and seeing which classifiers perform the best!</h4>
+      <br>
+      <p>This visualization splits the data into training and test sets, fits the selected model
+      on the training data, and then plots the test data on top of the trained decision boundary.</p>
+      <p>To compute a new split of the data, click the 'New Train/Test Split' button.</p>
+      <p>To change the model used, select one from the dropdown menu.</p>
+      <p>To switch between the probability and the decision boundary, use the 'Select Boundary' dropdown menu.</p>
+      <br>
+    <div class="container bk-root" >
+      {{ bokeh_script|safe }}
+    </div>
+      <br>
+      <br>
+      <br>
+      <hr>
+
+  </div>
+
+
+  </body>
+</html>

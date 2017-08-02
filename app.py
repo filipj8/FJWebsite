@@ -38,13 +38,14 @@ def networkviz():
 
 @app.route('/interactive')
 def interactive():
-    bokeh_script = autoload_server(url='http://localhost:5006/bokeh_server')
-    return render_template('bokeh.html', bokeh_script=bokeh_script)
+    bokeh_script = autoload_server(url='http://localhost:5006/mushroom_classifier')
+    return render_template('mushroomclassifier.html', bokeh_script=bokeh_script)
 
 
 if __name__ == '__main__':
 
-    cmd = "bokeh serve --allow-websocket-origin=localhost:5000 --allow-websocket-origin=localhost:5006 bokeh_server.py"
+    cmd = "bokeh serve --allow-websocket-origin=localhost:5000 --allow-websocket-origin=localhost:5006 " \
+          "mushroom_classifier.py "
     bokeh_serve = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
     app.run(debug=True)
     bokeh_serve.kill()

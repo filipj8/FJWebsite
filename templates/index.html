@@ -297,10 +297,78 @@
             <!-- portfolio-wrapper -->
             <div id="portfolio-wrapper" class="bgrid-thirds s-bgrid-thirds cf">
 
-          	   <div class="columns portfolio-item">
+                <div class="columns portfolio-item">
                   <div class="item-wrap">
 
                      <a href="#modal-01" title="">
+                        <img alt="" src='{{ url_for('static', filename='images/portfolio/mushroom.jpg') }}'>
+                        <div class="overlay">
+                           <div class="portfolio-item-meta">
+          					      <h5>Interactive Visualization: Classification of Mushrooms</h5>
+                              <p>Interactive Visualization</p>
+          					   </div>
+                        </div>
+                        <div class="link-icon"><i class="icon-plus"></i></div>
+                     </a>
+
+                  </div>
+          		</div> <!-- item end -->
+
+                <div class="columns portfolio-item">
+                  <div class="item-wrap">
+
+                     <a href="#modal-02" title="">
+                        <img alt="" src='{{ url_for('static', filename='images/portfolio/phone.jpg') }}'>
+                        <div class="overlay">
+                           <div class="portfolio-item-meta">
+          					      <h5>Sentiment Analysis on Amazon's Unlocked Phone Reviews</h5>
+                              <p>Notebook</p>
+          					   </div>
+                        </div>
+                        <div class="link-icon"><i class="icon-plus"></i></div>
+                     </a>
+
+                  </div>
+          		</div> <!-- item end -->
+
+                <div class="columns portfolio-item">
+                  <div class="item-wrap">
+
+                     <a href="#modal-03" title="">
+                        <img alt="" src='{{ url_for('static', filename='images/portfolio/network.jpg') }}'>
+                        <div class="overlay">
+                           <div class="portfolio-item-meta">
+          					      <h5>Network Visualization with NetworkX</h5>
+                              <p>Notebook</p>
+          					   </div>
+                        </div>
+                        <div class="link-icon"><i class="icon-plus"></i></div>
+                     </a>
+
+                  </div>
+          		</div> <!-- item end -->
+
+                <div class="columns portfolio-item">
+                  <div class="item-wrap">
+
+                     <a href="#modal-04" title="">
+                        <img alt="" src='{{ url_for('static', filename='images/portfolio/decision.jpg') }}'>
+                        <div class="overlay">
+                           <div class="portfolio-item-meta">
+          					      <h5>Classifier Visualization</h5>
+                              <p>Notebook</p>
+          					   </div>
+                        </div>
+                        <div class="link-icon"><i class="icon-plus"></i></div>
+                     </a>
+
+                  </div>
+          		</div> <!-- item end -->
+
+          	   <div class="columns portfolio-item">
+                  <div class="item-wrap">
+
+                     <a href="#modal-05" title="">
                         <img alt="" src='{{ url_for('static', filename='images/portfolio/iris.jpg') }}'>
                         <div class="overlay">
                            <div class="portfolio-item-meta">
@@ -317,80 +385,12 @@
                <div class="columns portfolio-item">
                   <div class="item-wrap">
 
-                     <a href="#modal-02" title="">
-                        <img alt="" src='{{ url_for('static', filename='images/portfolio/console.jpg') }}'>
-                        <div class="overlay">
-                           <div class="portfolio-item-meta">
-          					      <h5>Classifier Visualization</h5>
-                              <p>Notebook</p>
-          					   </div>
-                        </div>
-                        <div class="link-icon"><i class="icon-plus"></i></div>
-                     </a>
-
-                  </div>
-          		</div> <!-- item end -->
-
-               <div class="columns portfolio-item">
-                  <div class="item-wrap">
-
-                     <a href="#modal-03" title="">
+                     <a href="#modal-06" title="">
                         <img alt="" src='{{ url_for('static', filename='images/portfolio/regex.jpg') }}'>
                         <div class="overlay">
                            <div class="portfolio-item-meta">
           					      <h5>Pandas Regex</h5>
                               <p>Notebook</p>
-          					   </div>
-                        </div>
-                        <div class="link-icon"><i class="icon-plus"></i></div>
-                     </a>
-
-                  </div>
-          		</div> <!-- item end -->
-
-               <div class="columns portfolio-item">
-                  <div class="item-wrap">
-
-                     <a href="#modal-04" title="">
-                        <img alt="" src='{{ url_for('static', filename='images/portfolio/phone.jpg') }}'>
-                        <div class="overlay">
-                           <div class="portfolio-item-meta">
-          					      <h5>Sentiment Analysis on Amazon's Unlocked Phone Reviews</h5>
-                              <p>Notebook</p>
-          					   </div>
-                        </div>
-                        <div class="link-icon"><i class="icon-plus"></i></div>
-                     </a>
-
-                  </div>
-          		</div> <!-- item end -->
-
-               <div class="columns portfolio-item">
-                  <div class="item-wrap">
-
-                     <a href="#modal-05" title="">
-                        <img alt="" src='{{ url_for('static', filename='images/portfolio/network.jpg') }}'>
-                        <div class="overlay">
-                           <div class="portfolio-item-meta">
-          					      <h5>Network Visualization with NetworkX</h5>
-                              <p>Notebook</p>
-          					   </div>
-                        </div>
-                        <div class="link-icon"><i class="icon-plus"></i></div>
-                     </a>
-
-                  </div>
-          		</div> <!-- item end -->
-
-               <div class="columns portfolio-item">
-                  <div class="item-wrap">
-
-                     <a href="#modal-06" title="">
-                        <img alt="" src='{{ url_for('static', filename='images/portfolio/bokeh.jpg') }}'>
-                        <div class="overlay">
-                           <div class="portfolio-item-meta">
-          					      <h5>Interactive Clustering Example</h5>
-                              <p>Interactive Visualization</p>
           					   </div>
                         </div>
                         <div class="link-icon"><i class="icon-plus"></i></div>
@@ -407,64 +407,28 @@
          <!-- Modal Popup
 	      --------------------------------------------------------------- -->
 
-         <div id="modal-01" class="popup-modal mfp-hide">
-              <a href="/pandasseaborn">
-		       <img class="scale-with-grid" src='{{ url_for('static', filename='images/portfolio/modals/m-iris.jpg') }}' alt="" />
+          <div id="modal-01" class="popup-modal mfp-hide">
+
+              <a href="/interactive">
+                  <img class="scale-with-grid" src='{{ url_for('static', filename='images/portfolio/modals/m-mushroom.jpg') }}' alt="" />
               </a>
 		      <div class="description-box">
-			      <h4>Visualization in Pandas and Seaborn</h4>
-			      <p>Notebook for a video tutorial on visualization in pandas and Seaborn from Applied Plotting and
-                      Charting in Python.</p>
-               <span class="categories"><i class="fa fa-tag"></i>Pandas, Seaborn</span>
+			      <h4>Interactive Visualization</h4>
+			      <p>Interactive visualization of classification of mushrooms using bokeh server.</p>
+               <span class="categories"><i class="fa fa-tag"></i>Classification, Bokeh</span>
 		      </div>
 
             <div class="link-box">
-               <a href="/pandasseaborn">Go to Notebook</a>
+               <a href="/interactive">Open Visualization</a>
 		         <a class="popup-modal-dismiss">Close</a>
             </div>
 
 	      </div><!-- modal-01 End -->
 
-         <div id="modal-02" class="popup-modal mfp-hide">
-              <a href="/classifiervisualization">
-		       <img class="scale-with-grid" src='{{ url_for('static', filename='images/portfolio/modals/m-console.jpg') }}' alt="" />
-              </a>
-		      <div class="description-box">
-			      <h4>Classifier Visualization</h4>
-			      <p>Notebook for visualizing different machine learning classification algorithms from Applied Machine
-                      Learning in Python.</p>
-               <span class="categories"><i class="fa fa-tag"></i>Scikit-Learn, Machine Learning</span>
-		      </div>
-
-            <div class="link-box">
-               <a href="/classifiervisualization">Go to Notebook</a>
-		         <a class="popup-modal-dismiss">Close</a>
-            </div>
-
-	      </div><!-- modal-02 End -->
-
-         <div id="modal-03" class="popup-modal mfp-hide">
-              <a href="/pandasregex">
-		       <img class="scale-with-grid" src='{{ url_for('static', filename='images/portfolio/modals/m-regex.jpg') }}' alt="" />
-              </a>
-		      <div class="description-box">
-			      <h4>Pandas Regex</h4>
-			      <p>Notebook for a video tutorial on regular expressions in pandas from Applied Text
-                      Mining in Python.</p>
-               <span class="categories"><i class="fa fa-tag"></i>Regex, Pandas</span>
-		      </div>
-
-            <div class="link-box">
-               <a href="/pandasregex">Go to Notebook</a>
-		         <a class="popup-modal-dismiss">Close</a>
-            </div>
-
-	      </div><!-- modal-03 End -->
-
-         <div id="modal-04" class="popup-modal mfp-hide">
+          <div id="modal-02" class="popup-modal mfp-hide">
 
 		      <a href="/sentiment">
-                  <img class="scale-with-grid" src='{{ url_for('static', filename='images/portfolio/modals/phone.jpg') }}' alt="" />
+                  <img class="scale-with-grid" src='{{ url_for('static', filename='images/portfolio/modals/m-phone.jpg') }}' alt="" />
               </a>
 
 		      <div class="description-box">
@@ -479,9 +443,9 @@
 		         <a class="popup-modal-dismiss">Close</a>
             </div>
 
-	      </div><!-- modal-04 End -->
+	      </div><!-- modal-02 End -->
 
-         <div id="modal-05" class="popup-modal mfp-hide">
+           <div id="modal-03" class="popup-modal mfp-hide">
 
               <a href="/networkviz">
                   <img class="scale-with-grid" src='{{ url_for('static', filename='images/portfolio/modals/m-network.jpg') }}' alt="" />
@@ -498,25 +462,66 @@
 		         <a class="popup-modal-dismiss">Close</a>
             </div>
 
-	      </div><!-- modal-05 End -->
+	      </div><!-- modal-03 End -->
 
-         <div id="modal-06" class="popup-modal mfp-hide">
 
-              <a href="/interactive">
-                  <img class="scale-with-grid" src='{{ url_for('static', filename='images/portfolio/modals/m-bokeh.jpg') }}' alt="" />
+         <div id="modal-04" class="popup-modal mfp-hide">
+              <a href="/classifiervisualization">
+		       <img class="scale-with-grid" src='{{ url_for('static', filename='images/portfolio/modals/m-decision.jpg') }}' alt="" />
               </a>
 		      <div class="description-box">
-			      <h4>Clustering Visualization</h4>
-			      <p>Interactive clustering visualization using bokeh server.</p>
-               <span class="categories"><i class="fa fa-tag"></i>Clustering, Bokeh</span>
+
+			      <h4>Classifier Visualization</h4>
+			      <p>Notebook for visualizing different machine learning classification algorithms from Applied Machine
+                      Learning in Python.</p>
+               <span class="categories"><i class="fa fa-tag"></i>Scikit-Learn, Machine Learning</span>
 		      </div>
 
             <div class="link-box">
-               <a href="/interactive">Open Visualization</a>
+               <a href="/classifiervisualization">Go to Notebook</a>
+		         <a class="popup-modal-dismiss">Close</a>
+            </div>
+
+         </div><!-- modal-04 End -->
+
+         <div id="modal-05" class="popup-modal mfp-hide">
+              <a href="/pandasseaborn">
+		       <img class="scale-with-grid" src='{{ url_for('static', filename='images/portfolio/modals/m-iris.jpg') }}' alt="" />
+              </a>
+		      <div class="description-box">
+			      <h4>Visualization in Pandas and Seaborn</h4>
+			      <p>Notebook for a video tutorial on visualization in pandas and Seaborn from Applied Plotting and
+                      Charting in Python.</p>
+               <span class="categories"><i class="fa fa-tag"></i>Pandas, Seaborn</span>
+		      </div>
+
+            <div class="link-box">
+               <a href="/pandasseaborn">Go to Notebook</a>
+		         <a class="popup-modal-dismiss">Close</a>
+            </div>
+
+
+	      </div><!-- modal-05 End -->
+
+         <div id="modal-06" class="popup-modal mfp-hide">
+              <a href="/pandasregex">
+		       <img class="scale-with-grid" src='{{ url_for('static', filename='images/portfolio/modals/m-regex.jpg') }}' alt="" />
+              </a>
+		      <div class="description-box">
+			      <h4>Pandas Regex</h4>
+			      <p>Notebook for a video tutorial on regular expressions in pandas from Applied Text
+                      Mining in Python.</p>
+               <span class="categories"><i class="fa fa-tag"></i>Regex, Pandas</span>
+		      </div>
+
+            <div class="link-box">
+               <a href="/pandasregex">Go to Notebook</a>
 		         <a class="popup-modal-dismiss">Close</a>
             </div>
 
 	      </div><!-- modal-06 End -->
+
+
 
       </div> <!-- row End -->
 
