@@ -12,6 +12,8 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 from sklearn.naive_bayes import GaussianNB
+from sklearn.neural_network import MLPClassifier
+
 
 
 
@@ -49,6 +51,9 @@ def fit_model(X_train, y_train, model_to_be_fitted):
 
     elif model_to_be_fitted == 'Gaussian Naive Bayes':
         model = GaussianNB()
+
+    elif model_to_be_fitted == 'MLP (3 hidden layers, relu activation)':
+        model = MLPClassifier(hidden_layer_sizes=(20,20,20), activation='relu', solver='lbfgs')
 
     else:
         model = LogisticRegression()
@@ -129,7 +134,7 @@ p2.select_one(HoverTool).tooltips = [("poisonous", "@poisonous"), ('prediction',
 # set up widgets
 ml_models = ['Logistic Regression', 'KNN (N=1)', 'KNN (N=20)', 'Decision Tree (max_depth=5)',
              'Decision Tree (full depth)', 'Random Forest', 'SVM (linear kernel)', 'SVM (rbf kernel)',
-             'Gaussian Naive Bayes']
+             'Gaussian Naive Bayes', 'MLP (3 hidden layers, relu activation)']
 
 model_select = Select(value='Logistic Regression',
                       title='Select model:',
