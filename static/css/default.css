@@ -616,9 +616,11 @@ input[type="checkbox"] { display: inline; }
 
 .column, .columns {
    position: relative;
-   padding: 0 20px;
+   /*padding: 0 20px;*/
    min-height: 1px;
    float: left;
+   margin-left: 10px;
+   margin-right: 10px;
 }
 .column.centered, .columns.centered  {
     float: none;
@@ -688,7 +690,7 @@ input[type="checkbox"] { display: inline; }
 --------------------------------------------------------------------- */
 .bgrid-sixths [class*="column"]   { width: 16.66667%; }
 .bgrid-quarters [class*="column"] { width: 25%; }
-.bgrid-thirds [class*="column"]   { width: 33.33333%; }
+.bgrid-thirds [class*="column"]   { width: 30%; }
 .bgrid-halves [class*="column"]   { width: 50%; }
 
 [class*="bgrid"] [class*="column"] + [class*="column"]:last-child { float: left; }
@@ -707,8 +709,8 @@ properly.
    /* block grids on small screens */
    .s-bgrid-sixths [class*="column"]   { width: 16.66667%; }
    .s-bgrid-quarters [class*="column"] { width: 25%; }
-   .s-bgrid-thirds [class*="column"]   { width: 33.33333%; }
-   .s-bgrid-halves [class*="column"]   { width: 50%; }
+   .s-bgrid-thirds [class*="column"]   { width: 30%; }
+   .s-bgrid-halves [class*="column"]   { width: 46%; }
 
    /* block grids left clearing */
    .first { clear: none; }
