@@ -47,5 +47,5 @@ if __name__ == '__main__':
     cmd = "bokeh serve --allow-websocket-origin=localhost:5000 --allow-websocket-origin=localhost:5006 " \
           "mushroom_classifier.py "
     bokeh_serve = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
-    app.run(debug=True)
+    app.run()
     bokeh_serve.kill()
