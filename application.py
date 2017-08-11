@@ -1,7 +1,6 @@
-from flask import Flask, render_template, url_for, send_file
+from flask import Flask, render_template, send_file
 from bokeh.embed import autoload_server
 from bokeh.client import pull_session
-import subprocess
 
 
 app = Flask(__name__)
@@ -11,10 +10,9 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-
 @app.route('/resume')
 def plot_csv():
-    return send_file('/Users/filip/PycharmProjects/filip_site/static/Resume/Filip_Jankovic_Resume.pdf')
+    return send_file('/static/Resume/Filip_Jankovic_Resume.pdf')
 
 @app.route('/pandasseaborn')
 def pandasseaborn():
@@ -38,14 +36,11 @@ def networkviz():
 
 @app.route('/interactive')
 def interactive():
-    bokeh_script = autoload_server(url='http://localhost:5006/mushroom_classifier')
-    return render_template('mushroomclassifier.html', bokeh_script=bokeh_script)
+    session = pull_session(url="http://localhost:5006/mushroom_classifier")
+    bokeh_script = autoload_server(None, url="http://localhost:5006/mushroom_classifier", session_id=session.id)
+    return render_template("mushroomclassifier.html", bokeh_script=bokeh_script)
 
 
 if __name__ == '__main__':
 
-    cmd = "bokeh serve --allow-websocket-origin=localhost:5000 --allow-websocket-origin=localhost:5006 " \
-          "mushroom_classifier.py "
-    bokeh_serve = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
     app.run()
-    bokeh_serve.kill()
