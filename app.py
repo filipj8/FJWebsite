@@ -13,7 +13,7 @@ def index():
 
 @app.route('/resume')
 def plot_csv():
-    return send_file('/static/Resume/Filip_Jankovic_Resume.pdf')
+    return send_file('/static/Resume/FilipJankovicResume.pdf')
 
 
 @app.route('/pandasseaborn')
@@ -50,4 +50,4 @@ def interactive():
 
 if __name__ == '__main__':
 
-    app.run()
+    app.run(debug=True)
