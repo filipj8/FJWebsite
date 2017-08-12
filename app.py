@@ -1,6 +1,7 @@
 from flask import Flask, render_template, send_file
 from bokeh.embed import autoload_server
 from bokeh.client import pull_session
+from werkzeug.contrib.fixers import ProxyFix
 
 
 app = Flask(__name__)
@@ -36,10 +37,12 @@ def networkviz():
 
 @app.route('/interactive')
 def interactive():
-    session = pull_session(url="http://localhost:5006/mushroom_classifier")
-    bokeh_script = autoload_server(None, url="http://localhost:5006/mushroom_classifier", session_id=session.id)
+    url = "http://104.131.82.22:5006"
+    session = pull_session(url=url, app_path="/mushroom_classifier")
+    bokeh_script = autoload_server(None, app_path="/mushroom_classifier", session_id=session.id, url=url)
     return render_template("mushroomclassifier.html", bokeh_script=bokeh_script)
 
+app.wsgi_app = ProxyFix(app.wsgi_app)
 
 if __name__ == '__main__':
 
