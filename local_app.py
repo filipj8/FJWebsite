@@ -12,7 +12,7 @@ def index():
 
 
 @app.route('/resume')
-def plot_csv():
+def resume():
     return send_file('/static/Resume/FilipJankovicResume.pdf')
 
 

@@ -13,13 +13,8 @@ def index():
 
 
 @app.route('/resume')
-def plot_csv():
-<<<<<<< HEAD
-    return send_file('/static/Resume/FilipJankovicResume.pdf')
-=======
+def resume():
     return send_file('/opt/webapps/bokehflask/static/Resume/FilipJankovicResume.pdf', attachment_filename='FilipJankovicResume.pdf')
->>>>>>> 993d4cff8b90063b671882209c3e41f19c5a65a2
-
 
 @app.route('/pandasseaborn')
 def pandasseaborn():
