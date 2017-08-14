@@ -79,7 +79,7 @@
 
    $(window).on('scroll', function() {
 
-		var h = $('header').height();
+		var h = $('header').height()-50;
 		var y = $(window).scrollTop();
       var nav = $('#nav-wrap');
 
