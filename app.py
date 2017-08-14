@@ -14,7 +14,8 @@ def index():
 
 @app.route('/resume')
 def resume():
-    return send_file('/opt/webapps/bokehflask/static/Resume/FilipJankovicResume.pdf', attachment_filename='FilipJankovicResume.pdf')
+    return send_file('./static/Resume/FilipJankovicResume.pdf', attachment_filename='FilipJankovicResume.pdf')
+
 
 @app.route('/pandasseaborn')
 def pandasseaborn():
