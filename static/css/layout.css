@@ -22,7 +22,7 @@
 /* a. General Styles
 /* ------------------------------------------------------------------ */
 
-body { background: #2b2b2b; }
+body { background: #ebeeee; }
 
 /* ------------------------------------------------------------------ */
 /* b. Header Styles
@@ -203,7 +203,7 @@ ul#nav li.current a { color: #0074e0; }
 }
 #about p {
    line-height: 30px;
-   color: #7A7A7A;
+   color: #828282;
 }
 #about .profile-pic {
    position: relative;
@@ -412,7 +412,7 @@ ul#nav li.current a { color: #0074e0; }
 
 #portfolio {
    background: #ebeeee;
-   padding-top: 90px;
+   padding-top: 60px;
    padding-bottom: 60px;
 }
 #portfolio h1 {
@@ -422,7 +422,7 @@ ul#nav li.current a { color: #0074e0; }
    text-align: center;
    margin-bottom: 48px;
    margin-left: -28px;
-   color: #95A3A3;
+   color: #696969;
 }
 
 /* Portfolio Content */
@@ -943,15 +943,15 @@ call-to-action .button {
 /* ------------------------------------------------------------------ */
 
 footer {
-   padding-top: 48px;
-   margin-bottom: 48px;
+   padding-top: 40px;
+   margin-bottom: 24px;
    color: #303030;
    font-size: 14px;
    text-align: center;
    position: relative;
 }
 
-footer a, footer a:visited { color: #898989; }
+footer a, footer a:visited { color: #505050; }
 footer a:hover, footer a:focus { color: #fff; }
 
 /* copyright */
