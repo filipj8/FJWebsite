@@ -14,16 +14,11 @@ from sklearn.svm import SVC
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neural_network import MLPClassifier
 
-
-
-
 np.random.seed(0)
-
 
 
 # define some helper functions
 def fit_model(X_train, y_train, model_to_be_fitted):
-
     # Generate the new colors:
     if model_to_be_fitted == 'Logistic Regression':
         model = LogisticRegression()
@@ -53,7 +48,7 @@ def fit_model(X_train, y_train, model_to_be_fitted):
         model = GaussianNB()
 
     elif model_to_be_fitted == 'MLP (3 hidden layers, relu activation)':
-        model = MLPClassifier(hidden_layer_sizes=(20,20,20), activation='relu', solver='lbfgs')
+        model = MLPClassifier(hidden_layer_sizes=(20, 20, 20), activation='relu', solver='lbfgs')
 
     else:
         model = LogisticRegression()
@@ -86,7 +81,6 @@ model = 'Logistic Regression'
 test_size = 0.25
 prob = True
 
-
 X_train, X_test, y_train, y_test = train_test_split(X, y)
 fitted_model = fit_model(X_train, y_train, model)
 back_preds, point_preds = predictions(X_test, fitted_model, prob=prob)
@@ -107,16 +101,13 @@ c = ['#d6d7ea', '#d6d8ea', '#d7d9eb', '#d7dbec', '#d7dcec', '#d8dded', '#d8deee'
 
 TOOLS = "hover,save,pan,box_zoom,reset,wheel_zoom"
 
-
 source2 = ColumnDataSource(data=dict(pc1=X_test[:, 0], pc2=X_test[:, 1],
                                      color=np.vectorize({0.0: '#036D9B', 1.0: '#E62A05'}.get)(y_test),
                                      poisonous=np.vectorize({0.0: 'no', 1.0: 'yes'}.get)(y_test),
                                      pred=point_preds))
 
-
 x_range = Range1d(x_min, x_max, bounds=(x_min, x_max), min_interval=1.5)
 y_range = Range1d(y_min, y_max, bounds=(y_min, y_max), min_interval=1.5)
-
 
 p2 = figure(title=model + ' ' * 5 + 'Test Accuracy: ' + str(np.round(fitted_model.score(X, y), 3)),
             x_range=x_range, y_range=y_range, tools=TOOLS,
@@ -129,7 +120,6 @@ p2.image([back_preds], x=x_min, y=y_min, dw=x_max - x_min, dh=y_max - y_min, pal
 p2.circle('pc1', 'pc2', color='color', fill_alpha=0.6, size=9, line_alpha=0, source=source2, level='overlay')
 
 p2.select_one(HoverTool).tooltips = [("poisonous", "@poisonous"), ('prediction', '@pred{0.00}')]
-
 
 # set up widgets
 ml_models = ['Logistic Regression', 'KNN (N=1)', 'KNN (N=20)', 'Decision Tree (max_depth=5)',
@@ -166,7 +156,7 @@ def update_predictions(attrname, old, new):
     back_preds, point_preds = predictions(X_test, fitted_model, prob=prob)
 
     source2.data = dict(pc1=X_test[:, 0], pc2=X_test[:, 1],
-                        color=np.vectorize({0.0:'#036D9B', 1.0:'#E62A05'}.get)(y_test),
+                        color=np.vectorize({0.0: '#036D9B', 1.0: '#E62A05'}.get)(y_test),
                         poisonous=np.vectorize({0.0: 'no', 1.0: 'yes'}.get)(y_test),
                         pred=point_preds)
 
@@ -188,7 +178,7 @@ def update_predictions2():
     back_preds, point_preds = predictions(X_test, fitted_model, prob=prob)
 
     source2.data = dict(pc1=X_test[:, 0], pc2=X_test[:, 1],
-                        color=np.vectorize({0.0:'#036D9B', 1.0:'#E62A05'}.get)(y_test),
+                        color=np.vectorize({0.0: '#036D9B', 1.0: '#E62A05'}.get)(y_test),
                         poisonous=np.vectorize({0.0: 'no', 1.0: 'yes'}.get)(y_test),
                         pred=point_preds)
 
@@ -197,11 +187,9 @@ def update_predictions2():
     p2.title.text = model + ' ' * 5 + 'Test Accuracy: ' + str(np.round(fitted_model.score(X, y), 3))
 
 
-
 model_select.on_change('value', update_predictions)
 test_split_button.on_click(update_predictions2)
 prediction_select.on_change('value', update_predictions)
-
 
 curdoc().add_root(row(inputs, p2))
 curdoc().title = "Mushrooms"
